@@ -1,52 +1,58 @@
 <template>
   <div :class="[!validMail() || !validName() ? 'search_error' : 'search']">
-    <h5 class="search_title">
-      Наименование товара<input
-        v-model="productData.productName"
-        required
-        :class="[validName() ? 'search_input' : 'search_input_error']"
-        type="text"
-        placeholder="Введите наименование товара"
-      />
-    </h5>
-    <span class="circle_container" v-if="!validName()"
-      ><small class="search_error_message"
-        >Поле является обязательным</small
-      >
+    <div class="circle_container">
+      <div class="search_title">Наименование товара</div>
+      <div class="circle"></div>
+    </div>
+    <input
+      v-model="productData.productName"
+      required
+      :class="[validName() ? 'search_input' : 'search_input_error']"
+      type="text"
+      placeholder="Введите наименование товара"
+    />
+    <span class="error_title" v-if="!validName()"
+      ><small class="search_error_message">Поле является обязательным</small>
+    </span>
 
-      </span
-    >
-    <h5 class="search_title">
-      Описание товара<input
-        v-model="productData.productDescription"
-        class="search_input_wide"
-        type="text"
-        placeholder="Введите описание товара"
-      />
-    </h5>
-    <h5 class="search_title">
-      Ссылка на изображение товара<input
-        v-model="productData.productLink"
-        :class="[!!validMail() ? 'search_input' : 'search_input_error']"
-        type="text"
-        placeholder="Введите ссылку"
-      />
-    </h5>
+    <div class="circle_container">
+      <div class="search_title">Описание товара</div>
+    </div>
+    <input
+      v-model="productData.productDescription"
+      class="search_input_wide"
+      type="text"
+      placeholder="Введите описание товара"
+    />
+
+    <div class="circle_container">
+      <div class="search_title">Ссылка на изображение товара</div>
+      <div class="circle"></div>
+    </div>
+    <input
+      v-model="productData.productLink"
+      :class="[!!validMail() ? 'search_input' : 'search_input_error']"
+      type="text"
+      placeholder="Введите ссылку"
+    />
     <span v-if="!validMail()"
       ><small class="search_error_message"
         >Поле является обязательным</small
       ></span
     >
-    <h5 class="search_title">
-      Цена товара
-      <input
-        @input="productData.productPrice = $event.target.value"
-        :value="validPrice(productData.productPrice)"
-        class="search_input"
-        type="text"
-        placeholder="Введите цену"
-      />
-    </h5>
+
+    <div class="circle_container">
+      <div class="search_title">Цена товара</div>
+      <div class="circle"></div>
+    </div>
+    <input
+      @input="productData.productPrice = $event.target.value"
+      :value="validPrice(productData.productPrice)"
+      class="search_input"
+      type="text"
+      placeholder="Введите цену"
+    />
+
     <button
       :class="[
         !validMail() || !validName() ? 'search__btn' : 'search__btn_active',
@@ -84,6 +90,19 @@ const validMail = () => {
 </script>
 
 <style lang="scss" scoped>
+.circle {
+  width: 4px;
+  height: 4px;
+  background: #ff8484;
+  border-radius: 4px;
+  margin-top: 16px;
+
+  &_container {
+    display: flex;
+    margin-left: 16px;
+  }
+}
+
 .search {
   margin-right: 16px;
   width: 332px;
@@ -105,11 +124,15 @@ const validMail = () => {
     &_message {
       color: #ff8484;
       margin-left: 16px;
+      font-weight: 400;
+      font-size: 8px;
+      /* identical to box height */
+      letter-spacing: -0.02em;
     }
   }
 
   &_title {
-    margin-left: 15px;
+    margin: 16px 0px 0px 0px;
     font-weight: 400;
     font-size: 10px;
     line-height: 13px;
@@ -121,6 +144,7 @@ const validMail = () => {
   }
 
   &_input {
+    margin-left: 16px;
     width: 268px;
     height: 36px;
     padding: 0 16px;
@@ -133,6 +157,7 @@ const validMail = () => {
   }
 
   &_input_error {
+    margin-left: 16px;
     width: 268px;
     height: 36px;
     padding: 0 16px;
@@ -141,6 +166,7 @@ const validMail = () => {
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     border-color: #ff8484;
+    outline: none;
   }
 
   &_input::placeholder {
@@ -148,6 +174,7 @@ const validMail = () => {
   }
 
   &_input_wide {
+    margin-left: 16px;
     width: 268px;
     height: 108px;
     padding: 0 16px;
