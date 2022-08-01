@@ -1,14 +1,24 @@
 <template>
-  <div class="search">
+  <div :class="[!validMail() || !validName() ? 'search_error' : 'search']">
     <h5 class="search_title">
       Наименование товара<input
-        class="search_input"
+        v-model="productData.productName"
+        required
+        :class="[validName() ? 'search_input' : 'search_input_error']"
         type="text"
         placeholder="Введите наименование товара"
       />
     </h5>
+    <span class="circle_container" v-if="!validName()"
+      ><small class="search_error_message"
+        >Поле является обязательным</small
+      >
+
+      </span
+    >
     <h5 class="search_title">
       Описание товара<input
+        v-model="productData.productDescription"
         class="search_input_wide"
         type="text"
         placeholder="Введите описание товара"
@@ -16,34 +26,87 @@
     </h5>
     <h5 class="search_title">
       Ссылка на изображение товара<input
-        class="search_input"
+        v-model="productData.productLink"
+        :class="[!!validMail() ? 'search_input' : 'search_input_error']"
         type="text"
         placeholder="Введите ссылку"
       />
     </h5>
+    <span v-if="!validMail()"
+      ><small class="search_error_message"
+        >Поле является обязательным</small
+      ></span
+    >
     <h5 class="search_title">
-      Цена товара<input
+      Цена товара
+      <input
+        @input="productData.productPrice = $event.target.value"
+        :value="validPrice(productData.productPrice)"
         class="search_input"
         type="text"
         placeholder="Введите цену"
       />
     </h5>
-    <button class="search__btn">Добавить товар</button>
+    <button
+      :class="[
+        !validMail() || !validName() ? 'search__btn' : 'search__btn_active',
+      ]"
+    >
+      Добавить товар
+    </button>
   </div>
 </template>
 
-<script></script>
+<script setup>
+import { ref } from "@vue/runtime-core";
+
+const productData = ref({
+  productName: "",
+  productDescription: "",
+  productLink: "",
+  productPrice: "",
+});
+
+const validName = () => {
+  if (!!productData.value?.productName) return true;
+};
+
+const validPrice = (e) => {
+  e = e.toString().replace(/[\s.,%]/g, "");
+  return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+};
+
+const validMail = () => {
+  return /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
+    productData.value.productLink
+  );
+};
+</script>
 
 <style lang="scss" scoped>
 .search {
   margin-right: 16px;
   width: 332px;
   height: 440px;
-
   background: #fffefb;
   box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
     0px 6px 10px rgba(0, 0, 0, 0.02);
   border-radius: 4px;
+
+  &_error {
+    margin-right: 16px;
+    width: 332px;
+    height: 520px;
+    background: #fffefb;
+    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
+      0px 6px 10px rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+
+    &_message {
+      color: #ff8484;
+      margin-left: 16px;
+    }
+  }
 
   &_title {
     margin-left: 15px;
@@ -67,6 +130,17 @@
     border-radius: 4px;
     outline: none;
     border: none;
+  }
+
+  &_input_error {
+    width: 268px;
+    height: 36px;
+    padding: 0 16px;
+    /* Darks & Whites / White */
+    background: #fffefb;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    border-color: #ff8484;
   }
 
   &_input::placeholder {
@@ -98,6 +172,18 @@
     border-radius: 10px;
     outline: none;
     border: none;
+
+    &_active {
+      margin: 20px 15px;
+      width: 305px;
+      height: 36px;
+      color: white;
+      background: green;
+      border-radius: 10px;
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
   }
 }
 </style>
