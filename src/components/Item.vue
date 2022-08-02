@@ -2,15 +2,17 @@
   <div class="item">
     <img class="item_remove" :src="svg" />
     <div class="item_wrapper">
-      <img class="item_card" src="../assets/card.jpg" />
+      <img
+        class="item_card"
+        :src="item.productLink || require(`../assets/card.jpg`)"
+      />
     </div>
     <div class="item_info">
-      <h1 class="item_title">Наименование товара</h1>
+      <h1 class="item_title">{{ item.productName }}</h1>
       <p class="item_description">
-        Довольно-таки интересное описание товара в&nbsp;несколько строк.
-        Довольно-таки интересное описание товара в&nbsp;несколько строк
+        {{ item.productDescription }}
       </p>
-      <strong class="item_price">10000 руб.</strong>
+      <strong class="item_price">{{ item.productPrice }}</strong>
     </div>
   </div>
 </template>
@@ -23,6 +25,12 @@ export default {
       svg: require("../assets/trash_btn.svg"),
     };
   },
+  props: {
+    item: {
+      type: Object,
+      required: true,
+    },
+  },
 };
 </script>
 
@@ -31,8 +39,7 @@ $text-color: #3f3f3f;
 
 .item {
   position: relative;
-  width: 100%;
-  max-width: 470px;
+  width: 332px;
   line-height: 1.25;
   color: grey;
   background-color: white;
@@ -74,12 +81,14 @@ $text-color: #3f3f3f;
     position: absolute;
     width: 100%;
     height: 100%;
-    object-fit: contain;
+    width: 332px;
+    height: 200px;
   }
 
   &_info {
     padding: 1rem;
     padding-bottom: 1.5rem;
+    height: 200px;
   }
 
   &_title {
