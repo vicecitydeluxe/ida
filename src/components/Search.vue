@@ -48,7 +48,7 @@
     <input
       @input="item.productPrice = $event.target.value"
       :value="validPrice(item.productPrice)"
-      class="search_input"
+      :class="[!!item?.productPrice ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите цену"
     />
@@ -57,7 +57,9 @@
       @click="addItem"
       @create="createItem"
       :class="[
-        !validMail() || !validName() ? 'search__btn' : 'search__btn_active',
+        !validMail() || !validName() || !item?.productPrice
+          ? 'search__btn'
+          : 'search__btn_active',
       ]"
     >
       Добавить товар
