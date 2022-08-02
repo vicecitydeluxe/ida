@@ -94,6 +94,7 @@ $text-color: #3f3f3f;
     padding: 1rem;
     padding-bottom: 1.5rem;
     height: 200px;
+    word-wrap: break-word;
   }
 
   &_title {

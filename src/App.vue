@@ -3,7 +3,12 @@
   <div class="layout_container">
     <Search @create="createItem" />
     <div class="item_container">
-      <Item v-for="item in items" :key="item.id" :item="item" @remove="removeItem"/>
+      <Item
+        v-for="item in items"
+        :key="item.id"
+        :item="item"
+        @remove="removeItem"
+      />
     </div>
   </div>
 </template>
@@ -38,8 +43,21 @@ export default {
       this.items.push(item);
     },
     removeItem(item) {
-      this.items = this.items.filter(p => p !== item);
+      this.items = this.items.filter((p) => p !== item);
     },
+  },
+  watch: {
+    items: {
+      handler(newValue) {
+        localStorage.setItem("data", JSON.stringify(newValue));
+      },
+      deep: true,
+    },
+  },
+  mounted() {
+    if (localStorage.data) {
+      this.items = JSON.parse(localStorage.getItem("data"));
+    }
   },
 };
 </script>

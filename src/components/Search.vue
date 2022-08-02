@@ -56,6 +56,7 @@
     <button
       @click="addItem"
       @create="createItem"
+      :disabled="!validMail() || !validName() || !item?.itemPrice"
       :class="[
         !validMail() || !validName() || !item?.itemPrice
           ? 'search__btn'
