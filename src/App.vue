@@ -1,14 +1,9 @@
 <template>
   <Header />
   <div class="layout_container">
-    <Search />
+    <Search @create="createItem" />
     <div class="item_container">
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
-      <Item />
+      <Item v-for="item in items" :key="item.id" :item="item" />
     </div>
   </div>
 </template>
@@ -24,6 +19,24 @@ export default {
     Search,
     Header,
     Item,
+  },
+  data() {
+    return {
+      items: [
+        {
+          productDescription:
+            "Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк",
+          productLink: "",
+          productName: "Наименование товара",
+          productPrice: "10000 руб.",
+        },
+      ],
+    };
+  },
+  methods: {
+    createItem(item) {
+      this.items.push(item);
+    },
   },
 };
 </script>

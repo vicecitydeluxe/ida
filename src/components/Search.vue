@@ -5,7 +5,7 @@
       <div class="circle"></div>
     </div>
     <input
-      v-model="productData.productName"
+      v-model="item.productName"
       required
       :class="[validName() ? 'search_input' : 'search_input_error']"
       type="text"
@@ -19,7 +19,7 @@
       <div class="search_title">Описание товара</div>
     </div>
     <input
-      v-model="productData.productDescription"
+      v-model="item.productDescription"
       class="search_input_wide"
       type="text"
       placeholder="Введите описание товара"
@@ -30,7 +30,7 @@
       <div class="circle"></div>
     </div>
     <input
-      v-model="productData.productLink"
+      v-model="item.productLink"
       :class="[!!validMail() ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите ссылку"
@@ -46,14 +46,16 @@
       <div class="circle"></div>
     </div>
     <input
-      @input="productData.productPrice = $event.target.value"
-      :value="validPrice(productData.productPrice)"
+      @input="item.productPrice = $event.target.value"
+      :value="validPrice(item.productPrice)"
       class="search_input"
       type="text"
       placeholder="Введите цену"
     />
 
     <button
+      @click="addItem"
+      @create="createItem"
       :class="[
         !validMail() || !validName() ? 'search__btn' : 'search__btn_active',
       ]"
@@ -66,15 +68,30 @@
 <script setup>
 import { ref } from "@vue/runtime-core";
 
-const productData = ref({
+const emit = defineEmits(["create"]);
+const handleChange = () => {
+  emit("create", item.value);
+};
+
+const item = ref({
   productName: "",
   productDescription: "",
   productLink: "",
   productPrice: "",
 });
 
+const addItem = () => {
+  handleChange();
+  item.value = {
+    productName: "",
+    productDescription: "",
+    productLink: "",
+    productPrice: "",
+  };
+};
+
 const validName = () => {
-  if (!!productData.value?.productName) return true;
+  if (!!item.value?.productName) return true;
 };
 
 const validPrice = (e) => {
@@ -84,7 +101,7 @@ const validPrice = (e) => {
 
 const validMail = () => {
   return /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
-    productData.value.productLink
+    item.value.productLink
   );
 };
 </script>
@@ -132,7 +149,7 @@ const validMail = () => {
   }
 
   &_title {
-    margin: 16px 0px 0px 0px;
+    margin: 16px 0px 4px 0px;
     font-weight: 400;
     font-size: 10px;
     line-height: 13px;
