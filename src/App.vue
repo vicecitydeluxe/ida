@@ -3,7 +3,7 @@
   <div class="layout_container">
     <Search @create="createItem" />
     <div class="item_container">
-      <Item v-for="item in items" :key="item.id" :item="item" />
+      <Item v-for="item in items" :key="item.id" :item="item" @remove="removeItem"/>
     </div>
   </div>
 </template>
@@ -24,11 +24,11 @@ export default {
     return {
       items: [
         {
-          productDescription:
+          itemDescription:
             "Довольно-таки интересное описание товара в несколько строк.Довольно-таки интересное описание товара в несколько строк",
-          productLink: "",
-          productName: "Наименование товара",
-          productPrice: "10000 руб.",
+          itemLink: "",
+          itemName: "Наименование товара",
+          itemPrice: "10000 руб.",
         },
       ],
     };
@@ -36,6 +36,9 @@ export default {
   methods: {
     createItem(item) {
       this.items.push(item);
+    },
+    removeItem(item) {
+      this.items = this.items.filter(p => p !== item);
     },
   },
 };

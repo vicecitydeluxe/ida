@@ -1,8 +1,8 @@
 <template>
   <select class="top__filter-selector">
     <option value="default">По умолчанию</option>
-    <option value="price">По цене вверх</option>
-    <option value="price">По цене вниз</option>
+    <option value="price">По цене max</option>
+    <option value="price">По цене min</option>
     <option value="price">По наименованию</option>
   </select>
 </template>

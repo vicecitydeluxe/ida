@@ -5,7 +5,7 @@
       <div class="circle"></div>
     </div>
     <input
-      v-model="item.productName"
+      v-model="item.itemName"
       required
       :class="[validName() ? 'search_input' : 'search_input_error']"
       type="text"
@@ -19,7 +19,7 @@
       <div class="search_title">Описание товара</div>
     </div>
     <input
-      v-model="item.productDescription"
+      v-model="item.itemDescription"
       class="search_input_wide"
       type="text"
       placeholder="Введите описание товара"
@@ -30,7 +30,7 @@
       <div class="circle"></div>
     </div>
     <input
-      v-model="item.productLink"
+      v-model="item.itemLink"
       :class="[!!validMail() ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите ссылку"
@@ -46,9 +46,9 @@
       <div class="circle"></div>
     </div>
     <input
-      @input="item.productPrice = $event.target.value"
-      :value="validPrice(item.productPrice)"
-      :class="[!!item?.productPrice ? 'search_input' : 'search_input_error']"
+      @input="item.itemPrice = $event.target.value"
+      :value="validPrice(item.itemPrice)"
+      :class="[!!item?.itemPrice ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите цену"
     />
@@ -57,7 +57,7 @@
       @click="addItem"
       @create="createItem"
       :class="[
-        !validMail() || !validName() || !item?.productPrice
+        !validMail() || !validName() || !item?.itemPrice
           ? 'search__btn'
           : 'search__btn_active',
       ]"
@@ -71,29 +71,30 @@
 import { ref } from "@vue/runtime-core";
 
 const emit = defineEmits(["create"]);
+
 const handleChange = () => {
   emit("create", item.value);
 };
 
 const item = ref({
-  productName: "",
-  productDescription: "",
-  productLink: "",
-  productPrice: "",
+  itemName: "",
+  itemDescription: "",
+  itemLink: "",
+  itemPrice: "",
 });
 
 const addItem = () => {
   handleChange();
   item.value = {
-    productName: "",
-    productDescription: "",
-    productLink: "",
-    productPrice: "",
+    itemName: "",
+    itemDescription: "",
+    itemLink: "",
+    itemPrice: "",
   };
 };
 
 const validName = () => {
-  if (!!item.value?.productName) return true;
+  if (!!item.value?.itemName) return true;
 };
 
 const validPrice = (e) => {
@@ -103,7 +104,7 @@ const validPrice = (e) => {
 
 const validMail = () => {
   return /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
-    item.value.productLink
+    item.value.itemLink
   );
 };
 </script>

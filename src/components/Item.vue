@@ -1,18 +1,18 @@
 <template>
   <div class="item">
-    <img class="item_remove" :src="svg" />
+    <img @click="removeItem" class="item_remove" :src="svg" />
     <div class="item_wrapper">
       <img
         class="item_card"
-        :src="item.productLink || require(`../assets/card.jpg`)"
+        :src="item.itemLink || require(`../assets/card.jpg`)"
       />
     </div>
     <div class="item_info">
-      <h1 class="item_title">{{ item.productName }}</h1>
+      <h1 class="item_title">{{ item.itemName }}</h1>
       <p class="item_description">
-        {{ item.productDescription }}
+        {{ item.itemDescription }}
       </p>
-      <strong class="item_price">{{ item.productPrice }}</strong>
+      <strong class="item_price">{{ item.itemPrice }}</strong>
     </div>
   </div>
 </template>
@@ -29,6 +29,11 @@ export default {
     item: {
       type: Object,
       required: true,
+    },
+  },
+  methods: {
+    removeItem() {
+      this.$emit("remove", this.item);
     },
   },
 };
