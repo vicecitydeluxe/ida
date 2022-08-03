@@ -82,6 +82,7 @@ const item = ref({
   itemDescription: "",
   itemLink: "",
   itemPrice: "",
+  id: Date.now()
 });
 
 const addItem = () => {
@@ -91,6 +92,7 @@ const addItem = () => {
     itemDescription: "",
     itemLink: "",
     itemPrice: "",
+    id: Date.now()
   };
 };
 

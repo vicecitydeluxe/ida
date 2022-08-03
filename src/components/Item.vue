@@ -91,6 +91,8 @@ $text-color: #3f3f3f;
   }
 
   &_info {
+    background: #FFFEFB;
+    border-radius: 4px;
     padding: 1rem;
     padding-bottom: 1.5rem;
     height: 200px;
