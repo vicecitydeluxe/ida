@@ -12,20 +12,20 @@
 
 <script setup>
 const props = defineProps({
-    modelValue: {
-      type: String,
-    },
-    options: {
-      type: Array,
-      default: () => [],
-    }
-  })
-  
-const emits = defineEmits(["update:modelValue"])
+  modelValue: {
+    type: String,
+  },
+  options: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const emits = defineEmits(["update:modelValue"]);
 
 const changeOption = (event) => {
-  emits("update:modelValue", event.target.value)
-}
+  emits("update:modelValue", event.target.value);
+};
 </script>
 
 <style lang="scss" scoped>
