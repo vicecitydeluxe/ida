@@ -61,18 +61,16 @@ export default {
 
     sortByCategory() {
       if (this.selectedOption === "По названию") {
-        this.items.sort((a, b) =>
-          a[this.itemName] > b[this.itemName] ? 1 : -1
-        );
+        this.items.sort((a, b) => (a["itemName"] > b["itemName"] ? 1 : -1));
       } else if (this.selectedOption === "По умолчанию") {
-        this.items.sort((a, b) => (a[this.id] > b[this.id] ? 1 : -1));
+        this.items.sort((a, b) => (a["id"] > b["id"] ? 1 : -1));
       } else if (this.selectedOption === "По цене max") {
         this.items.sort((a, b) =>
-          Number(a[this.itemPrice]) > Number(b[this.itemPrice]) ? 1 : -1
+          parseInt(a["itemPrice"]) < parseInt(b["itemPrice"]) ? 1 : -1
         );
       } else if (this.selectedOption === "По цене min") {
         this.items.sort((a, b) =>
-          Number(a[this.itemPrice]) < Number(b[this.itemPrice]) ? 1 : -1
+          parseInt(a["itemPrice"]) > parseInt(b["itemPrice"]) ? 1 : -1
         );
       }
     },

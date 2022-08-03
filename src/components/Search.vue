@@ -106,7 +106,7 @@ const validPrice = (e) => {
 };
 
 const validMail = () => {
-  return /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
+  return /^http(s)?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
     item.value.itemLink
   );
 };
