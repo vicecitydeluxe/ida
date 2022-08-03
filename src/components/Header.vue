@@ -1,14 +1,8 @@
 <template>
   <div class="header">
     <h1 class="header_title">Добавление товара</h1>
-    <Dropdown />
   </div>
 </template>
-
-<script setup>
-import Dropdown from "./Dropdown.vue";
-import { ref } from "@vue/runtime-core";
-</script>
 
 <style lang="scss" scoped>
 .header {

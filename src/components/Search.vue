@@ -5,7 +5,7 @@
       <div class="circle"></div>
     </div>
     <input
-      v-model="item.productName"
+      v-model="item.itemName"
       required
       :class="[validName() ? 'search_input' : 'search_input_error']"
       type="text"
@@ -19,7 +19,7 @@
       <div class="search_title">Описание товара</div>
     </div>
     <input
-      v-model="item.productDescription"
+      v-model="item.itemDescription"
       class="search_input_wide"
       type="text"
       placeholder="Введите описание товара"
@@ -30,7 +30,7 @@
       <div class="circle"></div>
     </div>
     <input
-      v-model="item.productLink"
+      v-model="item.itemLink"
       :class="[!!validMail() ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите ссылку"
@@ -46,9 +46,9 @@
       <div class="circle"></div>
     </div>
     <input
-      @input="item.productPrice = $event.target.value"
-      :value="validPrice(item.productPrice)"
-      :class="[!!item?.productPrice ? 'search_input' : 'search_input_error']"
+      @input="item.itemPrice = $event.target.value"
+      :value="validPrice(item.itemPrice)"
+      :class="[!!item?.itemPrice ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите цену"
     />
@@ -56,8 +56,9 @@
     <button
       @click="addItem"
       @create="createItem"
+      :disabled="!validMail() || !validName() || !item?.itemPrice"
       :class="[
-        !validMail() || !validName() || !item?.productPrice
+        !validMail() || !validName() || !item?.itemPrice
           ? 'search__btn'
           : 'search__btn_active',
       ]"
@@ -71,29 +72,32 @@
 import { ref } from "@vue/runtime-core";
 
 const emit = defineEmits(["create"]);
+
 const handleChange = () => {
   emit("create", item.value);
 };
 
 const item = ref({
-  productName: "",
-  productDescription: "",
-  productLink: "",
-  productPrice: "",
+  itemName: "",
+  itemDescription: "",
+  itemLink: "",
+  itemPrice: "",
+  id: Date.now()
 });
 
 const addItem = () => {
   handleChange();
   item.value = {
-    productName: "",
-    productDescription: "",
-    productLink: "",
-    productPrice: "",
+    itemName: "",
+    itemDescription: "",
+    itemLink: "",
+    itemPrice: "",
+    id: Date.now()
   };
 };
 
 const validName = () => {
-  if (!!item.value?.productName) return true;
+  if (!!item.value?.itemName) return true;
 };
 
 const validPrice = (e) => {
@@ -102,134 +106,12 @@ const validPrice = (e) => {
 };
 
 const validMail = () => {
-  return /^https?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
-    item.value.productLink
+  return /^http(s)?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
+    item.value.itemLink
   );
 };
 </script>
 
 <style lang="scss" scoped>
-.circle {
-  width: 4px;
-  height: 4px;
-  background: #ff8484;
-  border-radius: 4px;
-  margin-top: 16px;
-
-  &_container {
-    display: flex;
-    margin-left: 16px;
-  }
-}
-
-.search {
-  margin-right: 16px;
-  width: 332px;
-  height: 440px;
-  background: #fffefb;
-  box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
-    0px 6px 10px rgba(0, 0, 0, 0.02);
-  border-radius: 4px;
-
-  &_error {
-    margin-right: 16px;
-    width: 332px;
-    height: 520px;
-    background: #fffefb;
-    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
-      0px 6px 10px rgba(0, 0, 0, 0.02);
-    border-radius: 4px;
-
-    &_message {
-      color: #ff8484;
-      margin-left: 16px;
-      font-weight: 400;
-      font-size: 8px;
-      /* identical to box height */
-      letter-spacing: -0.02em;
-    }
-  }
-
-  &_title {
-    margin: 16px 0px 4px 0px;
-    font-weight: 400;
-    font-size: 10px;
-    line-height: 13px;
-    font-size: 10px;
-    line-height: 13px;
-    color: #49485e;
-    /* identical to box height */
-    letter-spacing: -0.02em;
-  }
-
-  &_input {
-    margin-left: 16px;
-    width: 268px;
-    height: 36px;
-    padding: 0 16px;
-    /* Darks & Whites / White */
-    background: #fffefb;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    outline: none;
-    border: none;
-  }
-
-  &_input_error {
-    margin-left: 16px;
-    width: 268px;
-    height: 36px;
-    padding: 0 16px;
-    /* Darks & Whites / White */
-    background: #fffefb;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    border-color: #ff8484;
-    outline: none;
-  }
-
-  &_input::placeholder {
-    color: #b4b4b4;
-  }
-
-  &_input_wide {
-    margin-left: 16px;
-    width: 268px;
-    height: 108px;
-    padding: 0 16px;
-    /* Darks & Whites / White */
-    background: #fffefb;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-    border-radius: 4px;
-    outline: none;
-    border: none;
-  }
-  &_input_wide::placeholder {
-    color: #b4b4b4;
-    transform: translateY(-40px);
-  }
-
-  &__btn {
-    margin: 20px 15px;
-    width: 305px;
-    height: 36px;
-    color: #b4b4b4;
-    background: #eeeeee;
-    border-radius: 10px;
-    outline: none;
-    border: none;
-
-    &_active {
-      margin: 20px 15px;
-      width: 305px;
-      height: 36px;
-      color: white;
-      background: green;
-      border-radius: 10px;
-      outline: none;
-      border: none;
-      cursor: pointer;
-    }
-  }
-}
+@import './Search.scss';
 </style>

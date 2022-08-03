@@ -1,0 +1,130 @@
+$m: 16px;
+$w: 320px;
+$fw: 400;
+$error-color: #ff8484;
+$back-color: #fffefb;
+$box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
+.search {
+  margin-right: 16px;
+  width: 332px;
+  height: 440px;
+  background: $back-color;
+  box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
+    0px 6px 10px rgba(0, 0, 0, 0.02);
+  border-radius: 4px;
+
+  &_error {
+    margin-right: 16px;
+    width: 332px;
+    height: 520px;
+    background: $back-color;
+    box-shadow: 0px 20px 30px rgba(0, 0, 0, 0.04),
+      0px 6px 10px rgba(0, 0, 0, 0.02);
+    border-radius: 4px;
+
+    &_message {
+      color: $error-color;
+      margin-left: 16px;
+      font-weight: $fw;
+      font-size: 8px;
+      /* identical to box height */
+      letter-spacing: -0.02em;
+    }
+  }
+
+  &_title {
+    margin: 16px 0px 4px 0px;
+    font-weight: $fw;
+    font-size: 10px;
+    line-height: 13px;
+    font-size: 10px;
+    line-height: 13px;
+    color: #49485e;
+    /* identical to box height */
+    letter-spacing: -0.02em;
+  }
+
+  &_input {
+    margin-left: 16px;
+    width: 268px;
+    height: 36px;
+    padding: 0 16px;
+    /* Darks & Whites / White */
+    background: $back-color;
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+  }
+
+  &_input_error {
+    margin-left: 16px;
+    width: 268px;
+    height: 36px;
+    padding: 0 16px;
+    /* Darks & Whites / White */
+    background: $back-color;
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+    border-color: $error-color;
+    outline: none;
+  }
+
+  &_input::placeholder {
+    color: #b4b4b4;
+  }
+
+  &_input_wide {
+    margin-left: 16px;
+    width: 268px;
+    height: 108px;
+    padding: 0 16px;
+    /* Darks & Whites / White */
+    background: #fffefb;
+    box-shadow: $box-shadow;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+  }
+  &_input_wide::placeholder {
+    color: #b4b4b4;
+    transform: translateY(-40px);
+  }
+
+  &__btn {
+    margin: 20px 15px;
+    width: 305px;
+    height: 36px;
+    color: #b4b4b4;
+    background: #eeeeee;
+    border-radius: 10px;
+    outline: none;
+    border: none;
+
+    &_active {
+      margin: 20px 15px;
+      width: 305px;
+      height: 36px;
+      color: white;
+      background: green;
+      border-radius: 10px;
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}
+
+.circle {
+  width: 4px;
+  height: 4px;
+  background: $error-color;
+  border-radius: 4px;
+  margin-top: 16px;
+
+  &_container {
+    display: flex;
+    margin-left: 16px;
+  }
+}

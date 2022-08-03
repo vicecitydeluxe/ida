@@ -1,13 +1,32 @@
 <template>
-  <select class="top__filter-selector">
-    <option value="default">По умолчанию</option>
-    <option value="price">По цене вверх</option>
-    <option value="price">По цене вниз</option>
-    <option value="price">По наименованию</option>
+  <select
+    class="top__filter-selector"
+    v-model="modelValue"
+    @change="changeOption"
+  >
+    <option v-for="option in options" :key="option.value" :value="option.name">
+      {{ option.name }}
+    </option>
   </select>
 </template>
 
-<script></script>
+<script setup>
+const props = defineProps({
+  modelValue: {
+    type: String,
+  },
+  options: {
+    type: Array,
+    default: () => [],
+  },
+});
+
+const emits = defineEmits(["update:modelValue"]);
+
+const changeOption = (event) => {
+  emits("update:modelValue", event.target.value);
+};
+</script>
 
 <style lang="scss" scoped>
 .top__filter-selector {
