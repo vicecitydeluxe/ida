@@ -10,23 +10,22 @@
   </select>
 </template>
 
-<script>
-export default {
-  props: {
+<script setup>
+const props = defineProps({
     modelValue: {
       type: String,
     },
     options: {
       type: Array,
       default: () => [],
-    },
-  },
-  methods: {
-    changeOption(event) {
-      this.$emit("update:modelValue", event.target.value);
-    },
-  },
-};
+    }
+  })
+  
+const emits = defineEmits(["update:modelValue"])
+
+const changeOption = (event) => {
+  emits("update:modelValue", event.target.value)
+}
 </script>
 
 <style lang="scss" scoped>

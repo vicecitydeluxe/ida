@@ -25,70 +25,59 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import Search from "./components/Search.vue";
 import Header from "./components/Header.vue";
 import Item from "./components/Item.vue";
 import Dropdown from "./components/Dropdown.vue";
+import { ref, onMounted, watch } from "@vue/runtime-core";
 
-export default {
-  name: "App",
-  components: {
-    Search,
-    Header,
-    Item,
-    Dropdown,
-  },
-  data() {
-    return {
-      items: [],
-      selectedOption: "По умолчанию",
-      sortOptions: [
-        { value: "default", name: "По умолчанию" },
-        { value: "priceMax", name: "По цене max" },
-        { value: "priceMin", name: "По цене min" },
-        { value: "title", name: "По названию" },
-      ],
-    };
-  },
-  methods: {
-    createItem(item) {
-      this.items.push(item);
-    },
-    removeItem(item) {
-      this.items = this.items.filter((p) => p !== item);
-    },
+const items = ref([]);
+const selectedOption = ref("По умолчанию");
 
-    sortByCategory() {
-      if (this.selectedOption === "По названию") {
-        this.items.sort((a, b) => (a["itemName"] > b["itemName"] ? 1 : -1));
-      } else if (this.selectedOption === "По умолчанию") {
-        this.items.sort((a, b) => (a["id"] > b["id"] ? 1 : -1));
-      } else if (this.selectedOption === "По цене max") {
-        this.items.sort((a, b) =>
-          parseInt(a["itemPrice"]) < parseInt(b["itemPrice"]) ? 1 : -1
-        );
-      } else if (this.selectedOption === "По цене min") {
-        this.items.sort((a, b) =>
-          parseInt(a["itemPrice"]) > parseInt(b["itemPrice"]) ? 1 : -1
-        );
-      }
-    },
-  },
-  watch: {
-    items: {
-      handler(newValue) {
-        localStorage.setItem("data", JSON.stringify(newValue));
-      },
-      deep: true,
-    },
-  },
-  mounted() {
-    if (localStorage.data) {
-      this.items = JSON.parse(localStorage.getItem("data"));
-    }
-  },
+const sortOptions = ref([
+  { name: "По умолчанию", value: "default" },
+  { name: "По цене max", value: "priceMax" },
+  { name: "По цене min", value: "priceMin" },
+  { name: "По названию", value: "title" },
+]);
+
+const createItem = (item) => {
+  items.value.push(item);
 };
+const removeItem = (item) => {
+  items.value = items.value.filter((p) => p !== item);
+};
+
+const sortByCategory = () => {
+  if (selectedOption.value === "По названию") {
+    items.value.sort((a, b) => (a["itemName"] > b["itemName"] ? 1 : -1));
+  } else if (selectedOption.value === "По умолчанию") {
+    items.value.sort((a, b) => (a["id"] > b["id"] ? 1 : -1));
+  } else if (selectedOption.value === "По цене max") {
+    items.value.sort((a, b) =>
+      parseInt(a["itemPrice"]) < parseInt(b["itemPrice"]) ? 1 : -1
+    );
+  } else if (selectedOption.value === "По цене min") {
+    items.value.sort((a, b) =>
+      parseInt(a["itemPrice"]) > parseInt(b["itemPrice"]) ? 1 : -1
+    );
+  }
+};
+
+watch(
+  () => items.value,
+  (newValue) => {
+    localStorage.setItem("data", JSON.stringify(newValue));
+  },
+  { deep: true }
+);
+
+onMounted(() => {
+  if (localStorage.data) {
+    items.value = JSON.parse(localStorage.getItem("data"));
+  }
+});
 </script>
 
 <style lang="scss">
