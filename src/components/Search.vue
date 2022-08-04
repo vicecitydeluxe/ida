@@ -113,5 +113,5 @@ const validMail = () => {
 </script>
 
 <style lang="scss" scoped>
-@import './Search.scss';
+@import '../styles/Search.scss';
 </style>

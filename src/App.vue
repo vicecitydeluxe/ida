@@ -15,8 +15,8 @@
     <div class="item_container">
       <transition-group name="item-list">
         <Item
-          v-for="(item, index) in items"
-          :key="index"
+          v-for="item in items"
+          :key="item"
           :item="item"
           @remove="removeItem"
         />

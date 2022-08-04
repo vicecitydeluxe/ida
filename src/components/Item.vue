@@ -40,5 +40,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './Item.scss';
+@import '../styles/Item.scss';
 </style>
