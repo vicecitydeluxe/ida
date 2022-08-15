@@ -1,6 +1,6 @@
 # ida
-all info about task below:
-https://idaproject.notion.site/Frontend-developer-test-9b834d020d8f406f851479791209beef
+[All info about task](https://www.figma.com/file/kIuVw6nSk218pi9iE98iq5/Junior-frontend-developer-test).  
+[Deployed app](https://vicecitydeluxe.github.io/ida/) 
 ## NodeJS -v
 Node.js v16.15.1
 ## Project setup
