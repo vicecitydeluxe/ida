@@ -1,18 +1,19 @@
 <template>
-  <div :class="[!validMail() || !validName() ? 'search_error' : 'search']">
+  <div :class="[!validMail || !validName ? 'search_error' : 'search']">
     <div class="circle_container">
       <div class="search_title">Наименование товара</div>
       <div class="circle"></div>
     </div>
     <input
       v-model="item.itemName"
-      required
-      :class="[validName() ? 'search_input' : 'search_input_error']"
+      :class="[validName ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите наименование товара"
     />
-    <span class="error_title" v-if="!validName()"
-      ><small class="search_error_message">Поле является обязательным</small>
+    <span class="error_title" v-if="!validName"
+      ><small class="search_error_message"
+        >Поле является обязательным, введите хотя бы 3 символа</small
+      >
     </span>
 
     <div class="circle_container">
@@ -31,11 +32,11 @@
     </div>
     <input
       v-model="item.itemLink"
-      :class="[!!validMail() ? 'search_input' : 'search_input_error']"
+      :class="[!!validMail ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите ссылку"
     />
-    <span v-if="!validMail()"
+    <span v-if="!validMail"
       ><small class="search_error_message"
         >Поле является обязательным</small
       ></span
@@ -47,18 +48,24 @@
     </div>
     <input
       @input="item.itemPrice = $event.target.value"
+      @focus="onFocus()"
+      @blur="onBlur()"
       :value="validPrice(item.itemPrice)"
-      :class="[!!item?.itemPrice ? 'search_input' : 'search_input_error']"
+      class="search_input"
       type="text"
       placeholder="Введите цену"
     />
-
+    <span v-if="!item.itemPrice && focused"
+      ><small class="search_error_message"
+        >Поле является обязательным</small
+      ></span
+    >
     <button
       @click="addItem"
       @create="createItem"
-      :disabled="!validMail() || !validName() || !item?.itemPrice"
+      :disabled="!validMail || !validName || !item?.itemPrice"
       :class="[
-        !validMail() || !validName() || !item?.itemPrice
+        !validMail || !validName || !item?.itemPrice
           ? 'search__btn'
           : 'search__btn_active',
       ]"
@@ -69,7 +76,7 @@
 </template>
 
 <script setup>
-import { ref } from "@vue/runtime-core";
+import { ref, computed } from "@vue/runtime-core";
 
 const emit = defineEmits(["create"]);
 
@@ -82,7 +89,7 @@ const item = ref({
   itemDescription: "",
   itemLink: "",
   itemPrice: "",
-  id: Date.now()
+  id: Date.now(),
 });
 
 const addItem = () => {
@@ -92,26 +99,40 @@ const addItem = () => {
     itemDescription: "",
     itemLink: "",
     itemPrice: "",
-    id: Date.now()
+    id: Date.now(),
   };
 };
 
-const validName = () => {
-  if (!!item.value?.itemName) return true;
-};
+const validName = computed(() => {
+  if (!!item.value?.itemName)
+    return /^[a-zA-Z0-9]{3,}$/.test(item.value.itemName);
+  else if (item.value.itemName === "") return true;
+});
 
 const validPrice = (e) => {
   e = e.toString().replace(/[\s.,%]/g, "");
   return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
 
-const validMail = () => {
-  return /^http(s)?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
-    item.value.itemLink
-  );
+const validMail = computed(() => {
+  if (item.value.itemLink !== "") {
+    return /^http(s)?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
+      item.value.itemLink
+    );
+  } else return true;
+});
+
+const focused = ref(false);
+
+const onFocus = () => {
+  focused.value = true;
+};
+
+const onBlur = () => {
+  focused.value = false;
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../styles/Search.scss';
+@import "../styles/Search.scss";
 </style>
