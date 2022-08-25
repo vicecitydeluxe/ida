@@ -1,5 +1,5 @@
 <template>
-  <div :class="[!validMail || !validName ? 'search_error' : 'search']">
+  <div :class="[!validLink || !validName ? 'search_error' : 'search']">
     <div class="circle_container">
       <div class="search_title">Наименование товара</div>
       <div class="circle"></div>
@@ -32,11 +32,11 @@
     </div>
     <input
       v-model="item.itemLink"
-      :class="[!!validMail ? 'search_input' : 'search_input_error']"
+      :class="[!!validLink ? 'search_input' : 'search_input_error']"
       type="text"
       placeholder="Введите ссылку"
     />
-    <span v-if="!validMail"
+    <span v-if="!validLink"
       ><small class="search_error_message"
         >Поле является обязательным</small
       ></span
@@ -63,9 +63,9 @@
     <button
       @click="addItem"
       @create="createItem"
-      :disabled="!validMail || !validName || !item?.itemPrice"
+      :disabled="!item?.itemLink || !validLink || !validName || !item?.itemPrice"
       :class="[
-        !validMail || !validName || !item?.itemPrice
+        !item?.itemLink || !validLink || !validName || !item?.itemPrice
           ? 'search__btn'
           : 'search__btn_active',
       ]"
@@ -105,7 +105,7 @@ const addItem = () => {
 
 const validName = computed(() => {
   if (!!item.value?.itemName)
-    return /^[a-zA-Z0-9]{3,}$/.test(item.value.itemName);
+    return /^[a-zA-Z0-9А-Яа-я]{3,}$/.test(item.value.itemName);
   else if (item.value.itemName === "") return true;
 });
 
@@ -114,7 +114,7 @@ const validPrice = (e) => {
   return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
 };
 
-const validMail = computed(() => {
+const validLink = computed(() => {
   if (item.value.itemLink !== "") {
     return /^http(s)?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
       item.value.itemLink
