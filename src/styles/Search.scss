@@ -5,6 +5,12 @@ $error-color: #ff8484;
 $back-color: #fffefb;
 $box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
 
+$font-family: "Source Sans Pro";
+$font-style: normal;
+$font-weight: 400;
+$font-size: 12px;
+$line-height: 15px;
+
 .search {
   margin-right: 16px;
   width: 332px;
@@ -56,6 +62,11 @@ $box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     outline: none;
     border: none;
+    font-family: $font-family;
+    font-style: $font-style;
+    font-style: $font-style;
+    font-style: $font-style;
+    line-height: $line-height;
   }
 
   &_input_error {
@@ -86,6 +97,11 @@ $box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
     border-radius: 4px;
     outline: none;
     border: none;
+    font-family: $font-family;
+    font-style: $font-style;
+    font-style: $font-style;
+    font-style: $font-style;
+    line-height: $line-height;
   }
   &_input_wide::placeholder {
     color: #b4b4b4;
