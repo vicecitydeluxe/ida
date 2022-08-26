@@ -56,11 +56,11 @@ const sortByCategory = () => {
     items.value.sort((a, b) => (a["id"] > b["id"] ? 1 : -1));
   } else if (selectedOption.value === "По цене max") {
     items.value.sort((a, b) =>
-      parseInt(a["itemPrice"]) < parseInt(b["itemPrice"]) ? 1 : -1
+      parseInt(a["itemPrice"].replace(/[\s.,%]/g, "")) < parseInt(b["itemPrice"].replace(/[\s.,%]/g, "")) ? 1 : -1
     );
   } else if (selectedOption.value === "По цене min") {
     items.value.sort((a, b) =>
-      parseInt(a["itemPrice"]) > parseInt(b["itemPrice"]) ? 1 : -1
+      parseInt(a["itemPrice"].replace(/[\s.,%]/g, "")) > parseInt(b["itemPrice"].replace(/[\s.,%]/g, "")) ? 1 : -1
     );
   }
 };
@@ -81,56 +81,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss">
-html,
-body {
-  background-color: #fffefb;
-  overflow: scroll;
-}
-
-::-webkit-scrollbar {
-    width: 0px;
-    background: transparent; /* make scrollbar transparent */
-}
-
-#app {
-  font-family: "Source Sans Pro";
-  font-style: normal;
-  margin: 0 32px;
-}
-
-.layout_container {
-  display: flex;
-}
-
-.item_container {
-  grid-gap: 16px;
-  display: grid;
-  grid-auto-flow: row;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-}
-
-.header {
-  display: flex;
-  align-content: space-between;
-  justify-content: space-between;
-}
-
-.item-list-enter-active {
-  animation: item-list-in 0.5s;
-}
-.item-list-leave-active {
-  animation: item-list-in 0.5s alternate-reverse;
-}
-@keyframes item-list-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.25);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+@import '../src/styles/App.scss';
 </style>
