@@ -84,6 +84,12 @@ onMounted(() => {
 html,
 body {
   background-color: #fffefb;
+  overflow: scroll;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent; /* make scrollbar transparent */
 }
 
 #app {
