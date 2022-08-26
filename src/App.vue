@@ -13,7 +13,7 @@
     <Search @create="createItem" />
 
     <div class="item_container">
-      <transition-group name="item-list">
+      <transition-group name="fade">
         <Item
           v-for="item in items"
           :key="item"
