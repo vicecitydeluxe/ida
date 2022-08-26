@@ -9,7 +9,7 @@
       <p class="item_description">
         {{ item.itemDescription }}
       </p>
-      <strong class="item_price">{{ validPrice(item.itemPrice) }} ₽</strong>
+      <strong class="item_price">{{ validPrice(item.itemPrice) }} руб.</strong>
     </div>
   </div>
 </template>
