@@ -11,6 +11,13 @@ $font-weight: 400;
 $font-size: 12px;
 $line-height: 15px;
 
+$layout-breakpoint-small:  820px;
+
+@media (max-width: $layout-breakpoint-small) {
+  .search {
+    margin-bottom: 10px;
+  }
+}
 .search {
   margin-right: 16px;
   width: 332px;
@@ -34,7 +41,6 @@ $line-height: 15px;
       margin-left: 16px;
       font-weight: $fw;
       font-size: 8px;
-      /* identical to box height */
       letter-spacing: -0.02em;
     }
   }
@@ -47,7 +53,6 @@ $line-height: 15px;
     font-size: 10px;
     line-height: 13px;
     color: #49485e;
-    /* identical to box height */
     letter-spacing: -0.02em;
   }
 
@@ -56,7 +61,6 @@ $line-height: 15px;
     width: 268px;
     height: 36px;
     padding: 0 16px;
-    /* Darks & Whites / White */
     background: $back-color;
     box-shadow: $box-shadow;
     border-radius: 4px;
@@ -74,7 +78,6 @@ $line-height: 15px;
     width: 268px;
     height: 36px;
     padding: 0 16px;
-    /* Darks & Whites / White */
     background: $back-color;
     box-shadow: $box-shadow;
     border-radius: 4px;
@@ -91,7 +94,6 @@ $line-height: 15px;
     width: 268px;
     height: 108px;
     padding: 0 16px;
-    /* Darks & Whites / White */
     background: #fffefb;
     box-shadow: $box-shadow;
     border-radius: 4px;
@@ -143,4 +145,6 @@ $line-height: 15px;
     display: flex;
     margin-left: 16px;
   }
+
+
 }

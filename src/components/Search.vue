@@ -1,3 +1,69 @@
+<script setup>
+import { ref, computed } from "@vue/runtime-core";
+
+const emit = defineEmits(["create"]);
+
+const handleChange = () => {
+  emit("create", item.value);
+};
+
+const item = ref({
+  itemName: "",
+  itemDescription: "",
+  itemLink: "",
+  itemPrice: "",
+  id: Date.now(),
+});
+
+const addItem = () => {
+  handleChange();
+  item.value = {
+    itemName: "",
+    itemDescription: "",
+    itemLink: "",
+    itemPrice: "",
+    id: Date.now(),
+  };
+};
+
+const validName = computed(() => {
+  if (!!item.value?.itemName)
+    return /^[a-zA-Z0-9А-Яа-я]{3,}$/.test(item.value.itemName);
+  else if (item.value.itemName === "") return true;
+});
+
+const validPrice = (e) => {
+  const patternOnlyNumbers = /[^0-9.]/g
+  if (patternOnlyNumbers.test(e) || patternOnlyNumbers.test(item.value.itemPrice)) {
+    item.value.itemPrice = item.value.itemPrice.replace(patternOnlyNumbers, '')
+    e = e.replace(patternOnlyNumbers, '')
+    return e.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+  else {
+    e = e.replace(/[\s.,%]/g, "");
+    return e.replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  }
+}
+
+const validLink = computed(() => {
+  if (item.value.itemLink !== "") {
+    return /^http(s)?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
+      item.value.itemLink
+    );
+  } else return true;
+});
+
+const focused = ref(false);
+
+const onFocus = () => {
+  focused.value = true;
+};
+
+const onBlur = () => {
+  focused.value = false;
+};
+</script>
+
 <template>
   <div :class="[!validLink || !validName ? 'search_error' : 'search']">
     <div class="circle_container">
@@ -57,7 +123,7 @@
     />
     <span v-if="!item.itemPrice && focused"
       ><small class="search_error_message"
-        >Поле является обязательным</small
+        >Поле является обязательным (только числа)</small
       ></span
     >
     <button
@@ -74,64 +140,6 @@
     </button>
   </div>
 </template>
-
-<script setup>
-import { ref, computed } from "@vue/runtime-core";
-
-const emit = defineEmits(["create"]);
-
-const handleChange = () => {
-  emit("create", item.value);
-};
-
-const item = ref({
-  itemName: "",
-  itemDescription: "",
-  itemLink: "",
-  itemPrice: "",
-  id: Date.now(),
-});
-
-const addItem = () => {
-  handleChange();
-  item.value = {
-    itemName: "",
-    itemDescription: "",
-    itemLink: "",
-    itemPrice: "",
-    id: Date.now(),
-  };
-};
-
-const validName = computed(() => {
-  if (!!item.value?.itemName)
-    return /^[a-zA-Z0-9А-Яа-я]{3,}$/.test(item.value.itemName);
-  else if (item.value.itemName === "") return true;
-});
-
-const validPrice = (e) => {
-  e = e.toString().replace(/[\s.,%]/g, "");
-  return e.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
-};
-
-const validLink = computed(() => {
-  if (item.value.itemLink !== "") {
-    return /^http(s)?:\/\/.*\/.*\.(png|gif|webp|jpeg|jpg)\??.*$/gim.test(
-      item.value.itemLink
-    );
-  } else return true;
-});
-
-const focused = ref(false);
-
-const onFocus = () => {
-  focused.value = true;
-};
-
-const onBlur = () => {
-  focused.value = false;
-};
-</script>
 
 <style lang="scss" scoped>
 @import "../styles/Search.scss";

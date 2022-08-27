@@ -1,30 +1,3 @@
-<template>
-  <div class="header">
-    <Header />
-    <Dropdown
-      @change="sortByCategory"
-      :modelValue="selectedOption"
-      :options="sortOptions"
-      v-model="selectedOption"
-    />
-  </div>
-
-  <div class="layout_container">
-    <Search @create="createItem" />
-
-    <div class="item_container">
-      <transition-group name="fade">
-        <Item
-          v-for="item in items"
-          :key="item"
-          :item="item"
-          @remove="removeItem"
-        />
-      </transition-group>
-    </div>
-  </div>
-</template>
-
 <script setup>
 import Search from "./components/Search.vue";
 import Header from "./components/Header.vue";
@@ -79,6 +52,33 @@ onMounted(() => {
   }
 });
 </script>
+
+<template>
+  <div class="header">
+    <Header />
+    <Dropdown
+      @change="sortByCategory"
+      :modelValue="selectedOption"
+      :options="sortOptions"
+      v-model="selectedOption"
+    />
+  </div>
+
+  <div class="layout_container">
+    <Search @create="createItem" />
+
+    <div class="item_container">
+      <transition-group name="fade">
+        <Item
+          v-for="item in items"
+          :key="item"
+          :item="item"
+          @remove="removeItem"
+        />
+      </transition-group>
+    </div>
+  </div>
+</template>
 
 <style lang="scss">
 @import '../src/styles/App.scss';

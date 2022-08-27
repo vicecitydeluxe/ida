@@ -1,15 +1,3 @@
-<template>
-  <select
-    class="top__filter-selector"
-    v-model="modelValue"
-    @change="changeOption"
-  >
-    <option v-for="option in options" :key="option.value" :value="option.name">
-      {{ option.name }}
-    </option>
-  </select>
-</template>
-
 <script setup>
 const props = defineProps({
   modelValue: {
@@ -27,6 +15,18 @@ const changeOption = (event) => {
   emits("update:modelValue", event.target.value);
 };
 </script>
+
+<template>
+  <select
+    class="top__filter-selector"
+    v-model="modelValue"
+    @change="changeOption"
+  >
+    <option v-for="option in options" :key="option.value" :value="option.name">
+      {{ option.name }}
+    </option>
+  </select>
+</template>
 
 <style lang="scss" scoped>
 $font-family: "Source Sans Pro";

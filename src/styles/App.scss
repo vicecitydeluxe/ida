@@ -1,10 +1,13 @@
+$layout-breakpoint-medium: 1300px;
+$layout-breakpoint-small: 820px;
+
 html,
 body {
   background-color: #fffefb;
 }
 ::-webkit-scrollbar {
     width: 0px;
-    background: transparent; /* make scrollbar transparent */
+    background: transparent;
 }
 #app {
   font-family: "Source Sans Pro";
@@ -22,7 +25,7 @@ body {
   grid-auto-flow: row;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(2, 1fr);
-}
+  }
 
 .header {
   display: flex;
@@ -30,25 +33,6 @@ body {
   justify-content: space-between;
 }
 
-// .item-list-enter-active {
-//   animation: item-list-in 0.5s;
-// }
-// .item-list-leave-active {
-//   animation: item-list-in 0.5s alternate-reverse;
-// }
-// @keyframes item-list-in {
-//   0% {
-//     transform: scale(0);
-//   }
-//   50% {
-//     transform: scale(1.25);
-//   }
-//   100% {
-//     transform: scale(1);
-//   }
-// }
-
-/* alt animations */
 .fade-move,
 .fade-enter-active,
 .fade-leave-active {
@@ -62,4 +46,25 @@ body {
 .fade-leave-active {
   position: absolute;
 
+}
+@media (max-width: $layout-breakpoint-medium) { .item_container {
+  grid-gap: 16px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  }
+}
+
+@media (max-width: $layout-breakpoint-small) { .item_container {
+  grid-gap: 16px;
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(1, 1fr);
+  grid-template-rows: repeat(1, 1fr);
+  }
+  .layout_container {
+    display: flex;
+    flex-direction: column;
+  }
 }
